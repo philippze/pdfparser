@@ -106,7 +106,8 @@ class Element
 
             if (!$only_values) {
                 if (!preg_match('/^\s*(?P<name>\/[A-Z0-9\._]+)(?P<value>.*)/si', substr($content, $position), $match)) {
-                    break;
+                    $position += 1;
+                    continue;
                 } else {
                     $name = ltrim($match['name'], '/');
                     $value = $match['value'];
@@ -138,8 +139,8 @@ class Element
             } elseif ($element = ElementArray::parse($value, $document, $position)) {
                 $values[$name] = $element;
             } else {
-                $position = $old_position;
-                break;
+                $position += 1;
+                continue;
             }
         } while ($position < \strlen($content));
 
